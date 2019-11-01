@@ -12,6 +12,8 @@ namespace Estoque.Context
     {
         private readonly ILoggerFactory _loggerFactory;
         public DbSet<TipoMaterial> TipoMaterial { get; set; }
+        public DbSet<Material> Material { get; set; }
+        public DbSet<EntradaEstoque> EntradaEstoque { get; set; }
         
 
         public EstoqueContext() { }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Estoque.Repository.interfaces
 {
-    public interface ITipoMaterial : IGenericRepository<TipoMaterial>
+    public interface ITipoMaterialRepository : IGenericRepository<TipoMaterial>
     {
 
     }
