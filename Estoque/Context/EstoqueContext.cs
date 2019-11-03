@@ -1,10 +1,6 @@
 ﻿using Estoque.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Estoque.Context
 {
@@ -14,7 +10,8 @@ namespace Estoque.Context
         public DbSet<TipoMaterial> TipoMaterial { get; set; }
         public DbSet<Material> Material { get; set; }
         public DbSet<EntradaEstoque> EntradaEstoque { get; set; }
-        
+        public DbSet<SaidaEstoque> SaidaEstoque { get; set; }
+
 
         public EstoqueContext() { }
 
