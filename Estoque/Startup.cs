@@ -1,33 +1,22 @@
-﻿using Estoque.Business.implementacoes;
-using Estoque.Business.interfaces;
-using Estoque.Context;
-using Estoque.Repository;
-using Estoque.Repository.implementacoes;
-using Estoque.Repository.interfaces;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Rewrite;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Net.Http.Headers;
-using Swashbuckle.AspNetCore.Swagger;
 
 namespace Estoque
 {
     public class Startup
     {
-        private readonly ILogger _logger;
-        public IConfiguration _configuration { get; }
-        public IHostingEnvironment _environment { get; }
-
-        public Startup(IConfiguration configuration, IHostingEnvironment environment, ILogger<Startup> logger)
+        public Startup(IConfiguration configuration)
         {
-            _configuration = configuration;
-            _environment = environment;
-            _logger = logger;
+            Configuration = configuration;
         }
 
         public IConfiguration Configuration { get; }
@@ -35,63 +24,40 @@ namespace Estoque
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc(options =>
+            services.Configure<CookiePolicyOptions>(options =>
             {
-                options.RespectBrowserAcceptHeader = true;
-                options.FormatterMappings.SetMediaTypeMappingForFormat("xml", MediaTypeHeaderValue.Parse("text/xml"));
-                options.FormatterMappings.SetMediaTypeMappingForFormat("json", MediaTypeHeaderValue.Parse("application/json"));
-
-            })
-            .AddXmlSerializerFormatters().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-
-            services.AddApiVersioning(option => option.ReportApiVersions = true);
-            services.AddSwaggerGen(c =>
-            {
-                var versionApp = _configuration["AppConfig:Version"];
-                c.SwaggerDoc(versionApp,
-                    new Info
-                    {
-                        Title = _configuration["AppConfig:AppName"],
-                        Version = versionApp
-                    });
+                // This lambda determines whether user consent for non-essential cookies is needed for a given request.
+                options.CheckConsentNeeded = context => true;
+                options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            var connectionString = _configuration["ConnectionString:SqlConnectionString"];
-            services.AddDbContext<EstoqueContext>(options => options.UseSqlServer(connectionString));
 
-            services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
-            services.AddScoped<ITipoMaterialBusiness, TipoMaterialBusiness>();
-            // services.AddScoped<IMaterialBusiness, MaterialBusiness>();
-            //services.AddScoped<IEntradaEstoqueBusiness, EntradaEstoqueBusiness>();
-            //services.AddScoped<ISaidaEstoqueBusiness, SaidaEstoqueBusiness>();
-
-            services.AddScoped<ITipoMaterialRepository, TipoMaterialRepository>();
-            //services.AddScoped<IMaterialRepository, MaterialRepository>();
-            //services.AddScoped<IEntradaEstoqueRepository, EntradaEstoqueRepository>();
-            //services.AddScoped<ISaidaEstoqueRepository, SaidaEstoqueRepository>();
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())
-                app.UseDeveloperExceptionPage();
-
-            app.UseSwagger();
-            app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint($"/swagger/{_configuration["AppConfig:Version"]}/swagger.json", _configuration["AppConfig:AppName"]);
-            });
+                app.UseDeveloperExceptionPage();
+            }
+            else
+            {
+                app.UseExceptionHandler("/Home/Error");
+                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+                app.UseHsts();
+            }
 
-            var option = new RewriteOptions();
-            option.AddRedirect("^$", "swagger");
-            app.UseRewriter(option);
+            app.UseHttpsRedirection();
+            app.UseStaticFiles();
+            app.UseCookiePolicy();
 
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
-                    name: "DefaultApi",
-                    template: "{controller}/{id?}");
+                    name: "default",
+                    template: "{controller=Home}/{action=Index}/{id?}");
             });
         }
     }
