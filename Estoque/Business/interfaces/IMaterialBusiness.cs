@@ -1,5 +1,7 @@
 ﻿using Estoque.Models;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Estoque.Business.interfaces
@@ -11,7 +13,7 @@ namespace Estoque.Business.interfaces
         Task<Material> FindById(int id);
         Task<ICollection<Material>> FindAll();
         Task<bool> Delete(int id);
-        Task<ICollection<Material>> FindByDescricaoMaterial(string descricao);
-        Task<ICollection<Material>> FindByTipoWithDescricao(string tipo);
+        Task<ICollection<Material>> FindMaterialByDescricao(string descricao);
+        Task<ICollection<Material>> FindMaterialByTipoMaterial(string tipo);
     }
 }

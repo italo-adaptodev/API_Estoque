@@ -61,12 +61,12 @@ namespace Estoque
 
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddScoped<ITipoMaterialBusiness, TipoMaterialBusiness>();
-            // services.AddScoped<IMaterialBusiness, MaterialBusiness>();
+            services.AddScoped<IMaterialBusiness, MaterialBusiness>();
             //services.AddScoped<IEntradaEstoqueBusiness, EntradaEstoqueBusiness>();
             //services.AddScoped<ISaidaEstoqueBusiness, SaidaEstoqueBusiness>();
 
             services.AddScoped<ITipoMaterialRepository, TipoMaterialRepository>();
-            //services.AddScoped<IMaterialRepository, MaterialRepository>();
+            services.AddScoped<IMaterialRepository, MaterialRepository>();
             //services.AddScoped<IEntradaEstoqueRepository, EntradaEstoqueRepository>();
             //services.AddScoped<ISaidaEstoqueRepository, SaidaEstoqueRepository>();
         }

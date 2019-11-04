@@ -30,9 +30,9 @@ namespace Estoque.Business.implementacoes
             return await _repository.FindAll();
         }
 
-        public async Task<ICollection<Material>> FindByDescricaoMaterial(string descricao)
+        public async Task<ICollection<Material>> FindMaterialByDescricao(string descricao)
         {
-            return await _repository.FindByDescricaoMaterial(descricao);
+            return await _repository.FindMaterialByDescricao(descricao);
         }
 
         public async Task<Material> FindById(int id)
@@ -40,9 +40,9 @@ namespace Estoque.Business.implementacoes
             return await _repository.FindById(id);
         }
 
-        public async Task<ICollection<Material>> FindByTipoWithDescricao(string tipo)
+        public async Task<ICollection<Material>> FindMaterialByTipoMaterial(string tipo)
         {
-            return await _repository.FindByTipoWithDescricao(tipo);
+            return await _repository.FindMaterialByTipoMaterial(tipo);
         }
 
         public async Task<Material> Update(Material obj)

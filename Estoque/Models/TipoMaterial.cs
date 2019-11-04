@@ -2,9 +2,10 @@
 
 namespace Estoque.Models
 {
+    [Table("Italo_TipoMaterial")]
     public class TipoMaterial : BaseEntity
     {
-        [Column("descricao")]
-        public string Descricao { get; set; }
+        [Column("tipo")]
+        public string tipo { get; set; }
     }
 }

@@ -6,7 +6,7 @@ namespace Estoque.Repository.interfaces
 {
     public interface IMaterialRepository : IGenericRepository<Material>
     {
-        Task<ICollection<Material>> FindByDescricaoMaterial(string descricao);
-        Task<ICollection<Material>> FindByTipoWithDescricao(string tipo);
+        Task<ICollection<Material>> FindMaterialByDescricao(string descricao);
+        Task<ICollection<Material>> FindMaterialByTipoMaterial(string tipo);
     }
 }
