@@ -9,13 +9,15 @@ namespace Estoque.Models
     [Table("Italo_EntradaEstoque")]
     public class EntradaEstoque : BaseEntity
     {
+        public virtual Material Material { get; set; }
+
         [Column("MaterialID")]
-        public virtual Material MaterialID { get; set; }
+        public int MaterialID { get; set; }
 
         [Column("data")]
         public DateTime Data { get; set; }
 
         [Column("quantidade")]
-        public double Quantidade { get; set; }
+        public int Quantidade { get; set; }
     }
 }

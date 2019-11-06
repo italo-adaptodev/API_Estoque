@@ -39,12 +39,17 @@ namespace Estoque.Repository.implementacoes
 
         public override async Task<ICollection<EntradaEstoque>> FindAll()
         {
-            return await _context.EntradaEstoque.ToListAsync();
+            return await _context.EntradaEstoque
+                .Include(p => p.Material)
+                .ToListAsync();
         }
 
         public override async Task<EntradaEstoque> FindById(int id)
         {
-            return await _context.EntradaEstoque.SingleOrDefaultAsync(p => p.Id.Equals(id));
+            return await _context.EntradaEstoque
+                .Include(p => p.Material)
+                .Where(p => p.Id.Equals(id))
+                .SingleOrDefaultAsync();
         }
 
         public override async Task<EntradaEstoque> Update(EntradaEstoque item)
@@ -67,17 +72,26 @@ namespace Estoque.Repository.implementacoes
         public async Task<ICollection<EntradaEstoque>> FindByData(int dia, int mes, int ano)
         {
             return await _context.EntradaEstoque
+                .Include(p => p.Material)
                 .Where(p => p.Data.Day.Equals(dia))
                 .Where(p => p.Data.Month.Equals(mes))
                 .Where(p => p.Data.Year.Equals(ano))
                 .ToListAsync();
         }
 
-        public async Task<ICollection<EntradaEstoque>> FindByMaterialID(int id)
+        public async Task<ICollection<EntradaEstoque>> FindByMaterial(string material)
         {
             return await _context.EntradaEstoque
-                .Where(p => p.MaterialID.Equals(id))
+                .Include(p => p.Material)
+                .Where(p => EF.Functions.Like(p.Material.Descricao, "%" + material + "%"))
                 .ToListAsync();
+        }
+
+        public int FindQtdByMaterial(string material)
+        {
+            return  _context.EntradaEstoque
+                .Where(p => EF.Functions.Like(p.Material.Descricao, "%" + material + "%"))
+                .Sum(i => i.Quantidade);
         }
     }
 }

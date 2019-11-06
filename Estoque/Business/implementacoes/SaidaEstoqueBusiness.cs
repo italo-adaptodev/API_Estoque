@@ -40,9 +40,14 @@ namespace Estoque.Business.implementacoes
             return await _repository.FindById(id);
         }
 
-        public async Task<ICollection<SaidaEstoque>> FindByMaterialID(int id)
+        public async Task<ICollection<SaidaEstoque>> FindByMaterial(string material)
         {
-            return await _repository.FindByMaterialID(id);
+            return await _repository.FindByMaterial(material);
+        }
+
+        public int FindQtdRetiradaByMaterial(string material)
+        {
+            return _repository.FindQtdRetiradaByMaterial(material);
         }
 
         public async Task<SaidaEstoque> Update(SaidaEstoque obj)

@@ -14,6 +14,7 @@ namespace Estoque.Business.interfaces
         Task<ICollection<EntradaEstoque>> FindAll();
         Task<bool> Delete(int id);
         Task<ICollection<EntradaEstoque>> FindByData(int dia, int mes, int ano);
-        Task<ICollection<EntradaEstoque>> FindByMaterialID(int id);
-    }
+        Task<ICollection<EntradaEstoque>> FindByMaterial(string material);
+        int FindQtdByMaterial(string material);
+    }   
 }

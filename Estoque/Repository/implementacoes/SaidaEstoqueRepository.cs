@@ -73,11 +73,18 @@ namespace Estoque.Repository.implementacoes
                 .ToListAsync();
         }
 
-        public async Task<ICollection<SaidaEstoque>> FindByMaterialID(int id)
+        public async Task<ICollection<SaidaEstoque>> FindByMaterial(string material)
         {
             return await _context.SaidaEstoque
-                .Where(p => p.MaterialID.Equals(id))
+                .Where(p => p.Material.Descricao.Equals(material))
                 .ToListAsync();
+        }
+
+        public int FindQtdRetiradaByMaterial(string material)
+        {
+            return _context.SaidaEstoque
+                .Where(p => EF.Functions.Like(p.Material.Descricao, "%" + material + "%"))
+                .Sum(i => i.Quantidade);
         }
     }
 }
