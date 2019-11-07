@@ -4,6 +4,7 @@ using Estoque.Repository.interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -22,21 +23,37 @@ namespace Estoque.Repository
 
         public virtual async Task<T> Create(T item)
         {
-            dataset.Add(item);
-            await _context.SaveChangesAsync();
-            return item;
+            try
+            {
+                dataset.Add(item);
+                await _context.SaveChangesAsync();
+                return item;
+            }
+            catch (DbUpdateException ex)
+            {
+                if (ex.InnerException is SqlException sqlException)
+                {
+                    int codigoErro = sqlException.Number;
+                    if (codigoErro.Equals(2627) || codigoErro.Equals(2601))
+                        throw new InvalidOperationException("O recurso já existe!");
+                    if (codigoErro.Equals(547))
+                        throw new InvalidOperationException("Chave Estrangeira inválida! ");
+                }
+                throw ex;
+            }
         }
 
-        public virtual async Task<bool> Delete(int id)
+        public async Task<T> Delete(int id)
         {
             var resultado = await dataset.SingleOrDefaultAsync(i => i.Id.Equals(id));
             try
             {
                 if (resultado == null)
-                    return false;
-                dataset.Remove(resultado);
+                    throw new Exception("O recurso não foi encontrado para exclusão");
+
+                _context.Entry(resultado).State = EntityState.Deleted;
                 await _context.SaveChangesAsync();
-                return true;
+                return resultado;
             }
             catch (Exception ex)
             {

@@ -12,7 +12,7 @@ namespace Estoque.Business.interfaces
         Task<EntradaEstoque> Update(EntradaEstoque obj);
         Task<EntradaEstoque> FindById(int id);
         Task<ICollection<EntradaEstoque>> FindAll();
-        Task<bool> Delete(int id);
+        Task Delete(int id);
         Task<ICollection<EntradaEstoque>> FindByData(int dia, int mes, int ano);
         Task<ICollection<EntradaEstoque>> FindByMaterial(string material);
         int FindQtdByMaterial(string material);

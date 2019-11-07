@@ -63,12 +63,12 @@ namespace Estoque
             services.AddScoped<ITipoMaterialBusiness, TipoMaterialBusiness>();
             services.AddScoped<IMaterialBusiness, MaterialBusiness>();
             services.AddScoped<IEntradaEstoqueBusiness, EntradaEstoqueBusiness>();
-            //services.AddScoped<ISaidaEstoqueBusiness, SaidaEstoqueBusiness>();
+            services.AddScoped<ISaidaEstoqueBusiness, SaidaEstoqueBusiness>();
 
             services.AddScoped<ITipoMaterialRepository, TipoMaterialRepository>();
             services.AddScoped<IMaterialRepository, MaterialRepository>();
             services.AddScoped<IEntradaEstoqueRepository, EntradaEstoqueRepository>();
-            //services.AddScoped<ISaidaEstoqueRepository, SaidaEstoqueRepository>();
+            services.AddScoped<ISaidaEstoqueRepository, SaidaEstoqueRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

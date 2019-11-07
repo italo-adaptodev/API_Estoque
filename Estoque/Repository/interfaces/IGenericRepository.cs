@@ -10,7 +10,7 @@ namespace Estoque.Repository.interfaces
     {
         Task<T> Create(T item);
         Task<T> Update(T item);
-        Task<bool> Delete(int id);
+        Task<T> Delete(int id);
         Task<ICollection<T>> FindAll();
         Task<T> FindById(int id);
     }

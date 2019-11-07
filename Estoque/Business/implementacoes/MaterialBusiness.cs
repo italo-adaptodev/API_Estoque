@@ -20,9 +20,9 @@ namespace Estoque.Business.implementacoes
             return await _repository.Create(obj);
         }
 
-        public async Task<bool> Delete(int id)
+        public async Task Delete(int id)
         {
-            return await _repository.Delete(id);
+            await _repository.Delete(id);
         }
 
         public async Task<ICollection<Material>> FindAll()

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Estoque.Models
 {
@@ -16,6 +12,5 @@ namespace Estoque.Models
         public string Descricao { get; set; }
 
         public virtual TipoMaterial TipoMaterial { get; set; }
-
     }
 }

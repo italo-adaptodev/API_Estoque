@@ -13,62 +13,6 @@ namespace Estoque.Repository.implementacoes
     {
         public EntradaEstoqueRepository(EstoqueContext context) : base(context) { }
 
-        public override async Task<EntradaEstoque> Create(EntradaEstoque item)
-        {
-            _context.EntradaEstoque.Add(item);
-            await _context.SaveChangesAsync();
-            return item;
-        }
-
-        public override async Task<bool> Delete(int id)
-        {
-            var resultado = await _context.EntradaEstoque.SingleOrDefaultAsync(i => i.Id.Equals(id));
-            try
-            {
-                if (resultado == null)
-                    return false;
-                _context.EntradaEstoque.Remove(resultado);
-                await _context.SaveChangesAsync();
-                return true;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
-
-        public override async Task<ICollection<EntradaEstoque>> FindAll()
-        {
-            return await _context.EntradaEstoque
-                .Include(p => p.Material)
-                .ToListAsync();
-        }
-
-        public override async Task<EntradaEstoque> FindById(int id)
-        {
-            return await _context.EntradaEstoque
-                .Include(p => p.Material)
-                .Where(p => p.Id.Equals(id))
-                .SingleOrDefaultAsync();
-        }
-
-        public override async Task<EntradaEstoque> Update(EntradaEstoque item)
-        {
-            var resultado = await _context.EntradaEstoque.SingleOrDefaultAsync(i => i.Id.Equals(item.Id));
-            try
-            {
-                if (resultado == null)
-                    throw new Exception("O item não existe");
-                _context.Entry(resultado).CurrentValues.SetValues(item);
-                await _context.SaveChangesAsync();
-                return resultado;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
-
         public async Task<ICollection<EntradaEstoque>> FindByData(int dia, int mes, int ano)
         {
             return await _context.EntradaEstoque

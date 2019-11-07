@@ -12,6 +12,6 @@ namespace Estoque.Business.interfaces
         Task<TipoMaterial> Update(TipoMaterial obj);
         Task<TipoMaterial> FindById(int id);
         Task<ICollection<TipoMaterial>> FindAll();
-        Task<bool> Delete(int id);
+        Task Delete(int id);
     }
 }
