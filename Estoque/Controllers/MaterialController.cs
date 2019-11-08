@@ -60,7 +60,7 @@ namespace Estoque.Controllers
         }
 
 
-        [HttpGet("descricao", Name = "FindMaterialByDescricao")]
+        [HttpGet("{descricao}", Name = "FindMaterialByDescricao")]
         public async Task<IActionResult> FindMaterialByDescricao(string descricao)
         {
             try
@@ -70,6 +70,26 @@ namespace Estoque.Controllers
 
                 var material = await _materialBusiness.FindMaterialByDescricao(descricao);
                 if (material.Count.Equals(0))
+                    return NotFound("Nenhum material foi encontrado correspondente com a descrição !");
+
+                return Ok(material);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"{ex.Message}");
+            }
+        }
+
+        [HttpGet("quantidade/{descricao}", Name = "QuantidadeTotalEstoque")]
+        public async Task<IActionResult> QuantidadeTotalEstoque(string descricao)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(descricao))
+                    return BadRequest(ModelState);
+
+                var material = _materialBusiness.SaldoMaterial(descricao);
+                if (material.Equals(0))
                     return NotFound("Nenhum material foi encontrado correspondente com a descrição !");
 
                 return Ok(material);

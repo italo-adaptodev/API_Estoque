@@ -49,5 +49,10 @@ namespace Estoque.Business.implementacoes
         {
             return await _repository.Update(obj);
         }
+
+        public int SaldoMaterial(string descricao)
+        {
+            return _repository.SaldoMaterial(descricao);
+        }
     }
 }

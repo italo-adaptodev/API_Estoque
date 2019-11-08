@@ -15,5 +15,6 @@ namespace Estoque.Business.interfaces
         Task Delete(int id);
         Task<ICollection<Material>> FindMaterialByDescricao(string descricao);
         Task<ICollection<Material>> FindMaterialByTipoMaterial(string tipo);
+        int SaldoMaterial(string descricao);
     }
 }

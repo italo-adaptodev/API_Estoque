@@ -30,18 +30,31 @@ namespace Estoque.Repository.implementacoes
                 .ToListAsync();
         }
 
-        //public int SaldoMaterial(string descricao)
-        //{
-        //    var v = from m in _context.Set<Material>()
-        //            join e in _context.Set<EntradaEstoque>()
-        //                on m.Id equals e.MaterialID 
-        //                from s in  
-                        
-        //            from s in _context.Set<SaidaEstoque>().Where(s => m.Id == s.MaterialID).DefaultIfEmpty
-        //            select new { m, e, s };
+        public int SaldoMaterial(string descricao)
+        {
+            //var l = from mat in _context.Material
+            //        join ent in _context.EntradaEstoque on mat.Id equals ent.MaterialID
+            //        join sai in _context.SaidaEstoque on mat.Id equals sai.MaterialID
+            //        where mat.Descricao.Contains(descricao) //and sescricao, "%" + material + "%"))
 
+            //        select new { mat, ent, sai };
 
-        //}
+            //return l
+            //    .Sum(i => i.ent.Quantidade);
 
+            var query = _context.Material.GroupJoin(_context.EntradaEstoque, material => material.Id, entradas => entradas.MaterialID,
+                (material, entradas) => new {
+                    MaterialID = material.Id,
+                    qtdEntradas = entradas.Sum(i => i.Quantidade),
+                    descricao = material.Descricao
+                }).ToList();
+
+            var qtd = from gp in query
+                      join sai in _context.SaidaEstoque on gp.MaterialID equals sai.MaterialID
+                      where gp.descricao.Contains(descricao)
+                        select new { qtd = gp.qtdEntradas - sai.Quantidade };
+            return qtd.Sum(i => i.qtd);
+        }
     }
 }
+      
