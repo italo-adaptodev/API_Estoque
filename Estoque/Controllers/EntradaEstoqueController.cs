@@ -38,7 +38,7 @@ namespace Estoque.Controllers
             }
         }
 
-        [HttpGet("{id}", Name = "FindByIdEntrada")]
+        [HttpGet("entrada/{id}", Name = "FindByIdEntrada")]
         public async Task<IActionResult> FindById(string id)
         {
             try
@@ -78,7 +78,7 @@ namespace Estoque.Controllers
             }
         }
 
-        [HttpGet("material", Name = "FindByMaterialEntrada")]
+        [HttpGet("material/{material}", Name = "FindByMaterialEntrada")]
         public async Task<IActionResult> FindByMaterial(string material)
         {
             try
@@ -98,7 +98,7 @@ namespace Estoque.Controllers
             }
         }
 
-        [HttpGet("quantidade", Name = "FindQtdInseridaByMaterial")]
+        [HttpGet("quantidade/{material}", Name = "FindQtdInseridaByMaterial")]
         public async Task<IActionResult> FindQtdByMaterial(string material)
         {
             try

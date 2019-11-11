@@ -9,5 +9,6 @@ namespace Estoque.Repository.interfaces
         Task<ICollection<EntradaEstoque>> FindByData(int dia, int mes, int ano);
         Task<ICollection<EntradaEstoque>> FindByMaterial(string material);
         int FindQtdByMaterial(string material);
+       
     }
 }

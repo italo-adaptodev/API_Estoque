@@ -13,6 +13,20 @@ namespace Estoque.Repository.implementacoes
     {
         public EntradaEstoqueRepository(EstoqueContext context) : base(context) { }
 
+        public override async Task<ICollection<EntradaEstoque>> FindAll()
+        {
+            return await _context.EntradaEstoque
+                .Include(p => p.Material)
+                .ToListAsync();
+        }
+
+        public override async Task<EntradaEstoque> FindById(int id)
+        {
+            return await _context.EntradaEstoque
+                .Include(p => p.Material)
+                .SingleOrDefaultAsync(p => p.Id.Equals(id));
+        }
+
         public async Task<ICollection<EntradaEstoque>> FindByData(int dia, int mes, int ano)
         {
             return await _context.EntradaEstoque

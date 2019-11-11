@@ -2,8 +2,6 @@
 using Estoque.Models;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Estoque.Controllers
@@ -39,7 +37,7 @@ namespace Estoque.Controllers
             }
         }
 
-        [HttpGet("{id}", Name = "GetByIdMaterial")]
+        [HttpGet("material/{id}", Name = "GetByIdMaterial")]
         public async Task<IActionResult> FindById(string id)
         {
             try
@@ -90,7 +88,27 @@ namespace Estoque.Controllers
 
                 var material = _materialBusiness.SaldoMaterial(descricao);
                 if (material.Equals(0))
-                    return NotFound("Nenhum material foi encontrado correspondente com a descrição !");
+                    return NotFound("Nenhuma unidade no estoque correspondente a este material!");
+
+                return Ok(material);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"{ex.Message}");
+            }
+        }
+
+        [HttpGet("tipo/{tipo}", Name = "FindMaterialByTipo")]
+        public async Task<IActionResult> FindMaterialByTipo(string tipo)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(tipo))
+                    return BadRequest(ModelState);
+
+                var material = await _materialBusiness.FindMaterialByTipoMaterial(tipo);
+                if (material.Count.Equals(0))
+                    return NotFound("Nenhum material foi encontrado correspondente ao tipo!");
 
                 return Ok(material);
             }
