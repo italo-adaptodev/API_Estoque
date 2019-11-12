@@ -59,14 +59,16 @@ namespace Estoque.Controllers
         }
 
         [HttpGet("data", Name = "FindByDataSaida")]
-        public async Task<IActionResult> FindByData(int dia, int mes, int ano)
+        public async Task<IActionResult> FindByData(String data)
         {
             try
             {
-                if (string.IsNullOrEmpty(Convert.ToString(dia)) || string.IsNullOrEmpty(Convert.ToString(mes)) || string.IsNullOrEmpty(Convert.ToString(ano)))
+                if (string.IsNullOrEmpty(data))
                     return BadRequest(ModelState);
 
-                var saidas = await _saidaEstoqueBusiness.FindByData(dia, mes, ano);
+                DateTime asDate = DateTime.Parse(data);
+
+                var saidas = await _saidaEstoqueBusiness.FindByData(asDate);
                 if (saidas.Count.Equals(0))
                     return NotFound("Nenhuma saida encontrada correspondente com a data solicitada!");
 
@@ -98,26 +100,6 @@ namespace Estoque.Controllers
             }
         }
 
-        [HttpGet("quantidade", Name = "FindQtdRetiradaByMaterial")]
-        public async Task<IActionResult> FindQtdRetiradaByMaterial(string material)
-        {
-            try
-            {
-                if (string.IsNullOrEmpty(material))
-                    return BadRequest(ModelState);
-
-                var qtdsaidas =  _saidaEstoqueBusiness.FindQtdRetiradaByMaterial(material);
-                
-                if (qtdsaidas.Equals(0))
-                    return NotFound("Nenhuma retirada encontrada correspondente com o material solicitado!");
-
-                return Ok("Quantidade total retirada: " + qtdsaidas);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest($"{ex.Message}");
-            }
-        }
         #endregion
 
         #region POST

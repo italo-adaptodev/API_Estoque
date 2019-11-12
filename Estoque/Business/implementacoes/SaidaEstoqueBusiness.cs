@@ -1,6 +1,7 @@
 ﻿using Estoque.Business.interfaces;
 using Estoque.Models;
 using Estoque.Repository.interfaces;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -30,9 +31,9 @@ namespace Estoque.Business.implementacoes
             return await _repository.FindAll();
         }
 
-        public async Task<ICollection<SaidaEstoque>> FindByData(int dia, int mes, int ano)
+        public async Task<ICollection<SaidaEstoque>> FindByData(DateTime data)
         {
-            return await _repository.FindByData(dia, mes, ano);
+            return await _repository.FindByData(data);
         }
 
         public async Task<SaidaEstoque> FindById(int id)

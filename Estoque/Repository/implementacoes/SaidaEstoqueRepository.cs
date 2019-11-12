@@ -13,12 +13,11 @@ namespace Estoque.Repository.implementacoes
     {
         public SaidaEstoqueRepository(EstoqueContext context) : base(context) { }
 
-        public async Task<ICollection<SaidaEstoque>> FindByData(int dia, int mes, int ano)
+        public async Task<ICollection<SaidaEstoque>> FindByData(DateTime data)
         {
             return await _context.SaidaEstoque
-                .Where(p => p.Data.Day.Equals(dia))
-                .Where(p => p.Data.Month.Equals(mes))
-                .Where(p => p.Data.Year.Equals(ano))
+                .Include(p => p.Material)
+                .Where(p => p.Data.Date.Equals(data.Date))
                 .ToListAsync();
         }
 
@@ -35,8 +34,6 @@ namespace Estoque.Repository.implementacoes
                 .Where(p => EF.Functions.Like(p.Material.Descricao, "%" + material + "%"))
                 .Sum(i => i.Quantidade);
         }
-
-
     }
 }
 

@@ -100,26 +100,6 @@ namespace Estoque.Controllers
             }
         }
 
-        [HttpGet("quantidade/{material}", Name = "FindQtdInseridaByMaterial")]
-        public async Task<IActionResult> FindQtdByMaterial(string material)
-        {
-            try
-            {
-                if (string.IsNullOrEmpty(material))
-                    return BadRequest(ModelState);
-
-                var qtdentradas =  _entradaEstoqueBusiness.FindQtdByMaterial(material);
-                
-                if (qtdentradas.Equals(0))
-                    return NotFound("Nenhuma entrada encontrada correspondente com o material solicitado!");
-
-                return Ok("Quantidade total cadastrada: " + qtdentradas);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest($"{ex.Message}");
-            }
-        }
         #endregion
 
         #region POST

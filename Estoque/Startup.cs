@@ -65,6 +65,7 @@ namespace Estoque
             services.AddScoped<IMaterialBusiness, MaterialBusiness>();
             services.AddScoped<IEntradaEstoqueBusiness, EntradaEstoqueBusiness>();
             services.AddScoped<ISaidaEstoqueBusiness, SaidaEstoqueBusiness>();
+            services.AddScoped<ISaldoBusiness, SaldoBusiness>();
 
             services.AddScoped(typeof(IGenericRepository<TipoMaterial>), typeof(GenericRepository<TipoMaterial>));
             services.AddScoped<IMaterialRepository, MaterialRepository>();

@@ -12,7 +12,6 @@ namespace Estoque.Context
         public DbSet<EntradaEstoque> EntradaEstoque { get; set; }
         public DbSet<SaidaEstoque> SaidaEstoque { get; set; }
 
-
         public EstoqueContext() { }
 
         public EstoqueContext(DbContextOptions<EstoqueContext> options, ILoggerFactory loggerFactory) : base(options)

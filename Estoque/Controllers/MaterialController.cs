@@ -78,26 +78,6 @@ namespace Estoque.Controllers
             }
         }
 
-        [HttpGet("quantidade/{descricao}", Name = "QuantidadeTotalEstoque")]
-        public async Task<IActionResult> QuantidadeTotalEstoque(string descricao)
-        {
-            try
-            {
-                if (string.IsNullOrEmpty(descricao))
-                    return BadRequest(ModelState);
-
-                var material = _materialBusiness.SaldoMaterial(descricao);
-                if (material.Equals(0))
-                    return NotFound("Nenhuma unidade no estoque correspondente a este material!");
-
-                return Ok(material);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest($"{ex.Message}");
-            }
-        }
-
         [HttpGet("tipo/{tipo}", Name = "FindMaterialByTipo")]
         public async Task<IActionResult> FindMaterialByTipo(string tipo)
         {

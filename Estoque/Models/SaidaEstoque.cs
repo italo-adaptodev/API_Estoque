@@ -16,6 +16,5 @@ namespace Estoque.Models
 
         [Column("quantidade")]
         public int Quantidade { get; set; }
-
     }
 }

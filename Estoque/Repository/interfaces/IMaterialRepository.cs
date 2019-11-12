@@ -9,6 +9,5 @@ namespace Estoque.Repository.interfaces
         Task<ICollection<Material>> FindMaterialByDescricao(string descricao);
         Task<ICollection<Material>> FindMaterialByTipoMaterial(string tipo);
         int SaldoMaterial(string descricao);
-
     }
 }

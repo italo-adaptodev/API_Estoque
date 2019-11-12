@@ -29,12 +29,10 @@ namespace Estoque.Repository.implementacoes
 
         public async Task<ICollection<EntradaEstoque>> FindByData(DateTime data)
         {
-            var h = await _context.EntradaEstoque
+            return await _context.EntradaEstoque
                 .Include(p => p.Material)
                 .Where(p => p.Data.Date.Equals(data.Date))
                 .ToListAsync();
-
-            return h;
         }
 
         public async Task<ICollection<EntradaEstoque>> FindByMaterial(string material)
