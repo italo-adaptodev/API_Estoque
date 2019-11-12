@@ -8,9 +8,9 @@ namespace Estoque.Business.implementacoes
 {
     public class TipoMaterialBusiness : ITipoMaterialBusiness
     {
-        private ITipoMaterialRepository _repository;
+        private IGenericRepository<TipoMaterial> _repository;
 
-        public TipoMaterialBusiness(ITipoMaterialRepository repository)
+        public TipoMaterialBusiness(IGenericRepository<TipoMaterial> repository)
         {
             _repository = repository;
         }
@@ -22,7 +22,7 @@ namespace Estoque.Business.implementacoes
 
         public async Task Delete(int id)
         {
-             await _repository.Delete(id);
+            await _repository.Delete(id);
         }
 
         public async Task<ICollection<TipoMaterial>> FindAll()

@@ -25,7 +25,7 @@ namespace Estoque.Repository.implementacoes
         public async Task<ICollection<SaidaEstoque>> FindByMaterial(string material)
         {
             return await _context.SaidaEstoque
-                .Where(p => p.Material.Descricao.Equals(material))
+                .Where(p => p.Material.Descricao.Contains(material))
                 .ToListAsync();
         }
 

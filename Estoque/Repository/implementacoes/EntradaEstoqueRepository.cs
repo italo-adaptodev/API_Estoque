@@ -27,14 +27,14 @@ namespace Estoque.Repository.implementacoes
                 .SingleOrDefaultAsync(p => p.Id.Equals(id));
         }
 
-        public async Task<ICollection<EntradaEstoque>> FindByData(int dia, int mes, int ano)
+        public async Task<ICollection<EntradaEstoque>> FindByData(DateTime data)
         {
-            return await _context.EntradaEstoque
+            var h = await _context.EntradaEstoque
                 .Include(p => p.Material)
-                .Where(p => p.Data.Day.Equals(dia))
-                .Where(p => p.Data.Month.Equals(mes))
-                .Where(p => p.Data.Year.Equals(ano))
+                .Where(p => p.Data.Date.Equals(data.Date))
                 .ToListAsync();
+
+            return h;
         }
 
         public async Task<ICollection<EntradaEstoque>> FindByMaterial(string material)

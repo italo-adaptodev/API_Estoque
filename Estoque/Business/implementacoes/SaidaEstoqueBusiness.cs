@@ -55,7 +55,5 @@ namespace Estoque.Business.implementacoes
             return await _repository.Update(obj);
         }
     }
-
-
 }
 

@@ -1,7 +1,6 @@
 ﻿using Estoque.Models;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Estoque.Business.interfaces
@@ -13,7 +12,7 @@ namespace Estoque.Business.interfaces
         Task<EntradaEstoque> FindById(int id);
         Task<ICollection<EntradaEstoque>> FindAll();
         Task Delete(int id);
-        Task<ICollection<EntradaEstoque>> FindByData(int dia, int mes, int ano);
+        Task<ICollection<EntradaEstoque>> FindByData(DateTime data);
         Task<ICollection<EntradaEstoque>> FindByMaterial(string material);
         int FindQtdByMaterial(string material);
     }   

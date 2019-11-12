@@ -2,7 +2,6 @@
 using Estoque.Models;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Estoque.Controllers

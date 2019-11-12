@@ -1,6 +1,7 @@
 ﻿using Estoque.Business.implementacoes;
 using Estoque.Business.interfaces;
 using Estoque.Context;
+using Estoque.Models;
 using Estoque.Repository;
 using Estoque.Repository.implementacoes;
 using Estoque.Repository.interfaces;
@@ -65,7 +66,7 @@ namespace Estoque
             services.AddScoped<IEntradaEstoqueBusiness, EntradaEstoqueBusiness>();
             services.AddScoped<ISaidaEstoqueBusiness, SaidaEstoqueBusiness>();
 
-            services.AddScoped<ITipoMaterialRepository, TipoMaterialRepository>();
+            services.AddScoped(typeof(IGenericRepository<TipoMaterial>), typeof(GenericRepository<TipoMaterial>));
             services.AddScoped<IMaterialRepository, MaterialRepository>();
             services.AddScoped<IEntradaEstoqueRepository, EntradaEstoqueRepository>();
             services.AddScoped<ISaidaEstoqueRepository, SaidaEstoqueRepository>();

@@ -59,14 +59,16 @@ namespace Estoque.Controllers
         }
 
         [HttpGet("data", Name = "FindByDataEntrada")]
-        public async Task<IActionResult> FindByData(int dia, int mes, int ano)
+        public async Task<IActionResult> FindByData(string data)
         {
             try
             {
-                if (string.IsNullOrEmpty(Convert.ToString(dia)) || string.IsNullOrEmpty(Convert.ToString(mes)) || string.IsNullOrEmpty(Convert.ToString(ano)))
+                if (string.IsNullOrEmpty(data))
                     return BadRequest(ModelState);
 
-                var entradas = await _entradaEstoqueBusiness.FindByData(dia, mes, ano);
+                DateTime asDate = DateTime.Parse(data);
+                
+                var entradas = await _entradaEstoqueBusiness.FindByData(asDate);
                 if (entradas.Count.Equals(0))
                     return NotFound("Nenhuma entrada encontrada correspondente com a data solicitada!");
 

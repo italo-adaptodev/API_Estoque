@@ -36,7 +36,7 @@ namespace Estoque.Repository.implementacoes
         {
             return await _context.Material
                 .Include(material => material.TipoMaterial)
-                .Where(p => p.TipoMaterial.tipo.Equals(tipo))
+                .Where(p => p.TipoMaterial.tipo.Contains(tipo))
                 .ToListAsync();
         }
 
@@ -51,10 +51,10 @@ namespace Estoque.Repository.implementacoes
 
             var saida = from gp in entrada
                         join sai in _context.SaidaEstoque on gp.MaterialID equals sai.MaterialID 
-                        where gp.descricao.Equals(descricao) 
+                        where gp.descricao.Contains(descricao) 
                         select new { qtdSaidas = sai.Quantidade };
             
-            int qtdEntrada = entrada.Where(p => p.descricao.Equals(descricao)).Sum(i => i.qtdEntradas);
+            int qtdEntrada = entrada.Where(p => p.descricao.Contains(descricao)).Sum(i => i.qtdEntradas);
 
             return TotalMaterial(qtdEntrada, saida.Sum(i => i.qtdSaidas) );
         }
