@@ -46,9 +46,9 @@ namespace Estoque.Business.implementacoes
             return await _repository.FindByMaterial(material);
         }
 
-        public int FindQtdByMaterial(string material)
+        public int SaldoEntradaByMaterial(string material)
         {
-            return _repository.FindQtdByMaterial(material);
+            return _repository.SaldoEntradaByMaterial(material);
         }
 
         public async Task<EntradaEstoque> Update(EntradaEstoque obj)

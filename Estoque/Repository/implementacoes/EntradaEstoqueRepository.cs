@@ -43,10 +43,10 @@ namespace Estoque.Repository.implementacoes
                 .ToListAsync();
         }
 
-        public int FindQtdByMaterial(string material)
+        public int SaldoEntradaByMaterial(string material)
         {
-            return  _context.EntradaEstoque
-                .Where(p => EF.Functions.Like(p.Material.Descricao, "%" + material + "%"))
+            return _context.EntradaEstoque
+                .Where(i => i.Material.Descricao.Contains(material))
                 .Sum(i => i.Quantidade);
         }
     }

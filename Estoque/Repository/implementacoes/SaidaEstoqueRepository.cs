@@ -28,10 +28,10 @@ namespace Estoque.Repository.implementacoes
                 .ToListAsync();
         }
 
-        public int FindQtdRetiradaByMaterial(string material)
+        public int SaldoSaidaByMaterial(string material)
         {
             return _context.SaidaEstoque
-                .Where(p => EF.Functions.Like(p.Material.Descricao, "%" + material + "%"))
+                .Where(i => i.Material.Descricao.Contains(material))
                 .Sum(i => i.Quantidade);
         }
     }

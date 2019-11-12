@@ -18,17 +18,19 @@ namespace Estoque.Business.implementacoes
 
         public int FindQtdByMaterial(string material)
         {
-            return _entradaRepository.FindQtdByMaterial(material);
+            return _entradaRepository.SaldoEntradaByMaterial(material);
         }
 
         public int FindQtdRetiradaByMaterial(string material)
         {
-            return _saidaRepository.FindQtdRetiradaByMaterial(material);
+            return _saidaRepository.SaldoSaidaByMaterial(material);
         }
 
         public int SaldoMaterial(string descricao)
         {
-            return _materialRepository.SaldoMaterial(descricao);
+            int qtdMaterialEntrada = FindQtdByMaterial(descricao);
+            int qtdMaterialSaida = FindQtdRetiradaByMaterial(descricao);
+            return qtdMaterialEntrada - qtdMaterialSaida; 
         }
     }
 }
