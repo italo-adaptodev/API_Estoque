@@ -20,49 +20,6 @@ namespace Estoque.Controllers
         }
 
         #region GET
-        [HttpGet("entrada/{material}", Name = "SaldoEntrada")]
-        public async Task<IActionResult> FindQtdByMaterial(string material)
-        {
-            try
-            {
-                if (string.IsNullOrEmpty(material))
-                    return BadRequest(ModelState);
-
-
-                var qtdentradas = _saldoBusiness.FindQtdByMaterial(material);
-
-                if (qtdentradas.Equals(0))
-                    return NotFound("Nenhuma entrada encontrada correspondente com o material solicitado!");
-
-                return Ok("Quantidade total cadastrada: " + qtdentradas);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest($"{ex.Message}");
-            }
-        }
-
-        [HttpGet("saida/{material}", Name = "SaldoSaida")]
-        public async Task<IActionResult> FindQtdRetiradaByMaterial(string material)
-        {
-            try
-            {
-                if (string.IsNullOrEmpty(material))
-                    return BadRequest(ModelState);
-
-                var qtdsaidas = _saldoBusiness.FindQtdRetiradaByMaterial(material);
-
-                if (qtdsaidas.Equals(0))
-                    return NotFound("Nenhuma retirada encontrada correspondente com o material solicitado!");
-
-                return Ok("Quantidade total retirada: " + qtdsaidas);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest($"{ex.Message}");
-            }
-        }
-
         [HttpGet("material/{descricao}", Name = "QuantidadeTotalEstoque")]
         public async Task<IActionResult> QuantidadeTotalEstoque(string descricao)
         {

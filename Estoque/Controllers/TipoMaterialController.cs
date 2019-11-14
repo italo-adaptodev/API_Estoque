@@ -79,7 +79,7 @@ namespace Estoque.Controllers
         #endregion
 
         #region PUT
-        [HttpPut("atualizar", Name = "UpdateTipoMaterial")]
+        [HttpPut(Name = "UpdateTipoMaterial")]
         public async Task<IActionResult> Update(TipoMaterial tipoMaterial)
         {
             try

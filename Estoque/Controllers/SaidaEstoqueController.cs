@@ -27,7 +27,6 @@ namespace Estoque.Controllers
             {
                 var saidas = await _saidaEstoqueBusiness.FindAll();
                 if (saidas.Count > 0)
-                    
                     return Ok(saidas);
 
                 return NotFound("Nenhuma saida encontrada");
@@ -58,7 +57,7 @@ namespace Estoque.Controllers
             }
         }
 
-        [HttpGet("data", Name = "FindByDataSaida")]
+        [HttpGet("{data}", Name = "FindByDataSaida")]
         public async Task<IActionResult> FindByData(String data)
         {
             try
@@ -100,6 +99,27 @@ namespace Estoque.Controllers
             }
         }
 
+        [HttpGet("saida/{material}", Name = "SaldoSaida")]
+        public async Task<IActionResult> FindQtdRetiradaByMaterial(string material)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(material))
+                    return BadRequest(ModelState);
+
+                var qtdsaidas = _saidaEstoqueBusiness.SaldoSaidaByMaterial(material);
+
+                if (qtdsaidas.Equals(0))
+                    return NotFound("Nenhuma retirada encontrada correspondente com o material solicitado!");
+
+                return Ok("Quantidade total retirada: " + qtdsaidas);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"{ex.Message}");
+            }
+        }
+
         #endregion
 
         #region POST
@@ -122,7 +142,7 @@ namespace Estoque.Controllers
         #endregion
 
         #region PUT
-        [HttpPut("atualizar", Name = "UpdateSaida")]
+        [HttpPut(Name = "UpdateSaida")]
         public async Task<IActionResult> Update(SaidaEstoque saida)
         {
             try

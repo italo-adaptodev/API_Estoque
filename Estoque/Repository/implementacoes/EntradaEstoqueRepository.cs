@@ -46,7 +46,7 @@ namespace Estoque.Repository.implementacoes
         public int SaldoEntradaByMaterial(string material)
         {
             return _context.EntradaEstoque
-                .Where(i => i.Material.Descricao.Contains(material))
+                .Where(i => i.Material.Descricao.Equals(material))
                 .Sum(i => i.Quantidade);
         }
     }

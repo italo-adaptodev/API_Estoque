@@ -58,7 +58,7 @@ namespace Estoque.Controllers
             }
         }
 
-        [HttpGet("data", Name = "FindByDataEntrada")]
+        [HttpGet("{data}", Name = "FindByDataEntrada")]
         public async Task<IActionResult> FindByData(string data)
         {
             try
@@ -100,6 +100,27 @@ namespace Estoque.Controllers
             }
         }
 
+        [HttpGet("entrada/{material}", Name = "SaldoEntrada")]
+        public async Task<IActionResult> FindQtdByMaterial(string material)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(material))
+                    return BadRequest(ModelState);
+
+
+                var qtdentradas = _entradaEstoqueBusiness.SaldoEntradaByMaterial(material);
+
+                if (qtdentradas.Equals(0))
+                    return NotFound("Nenhuma entrada encontrada correspondente com o material solicitado!");
+
+                return Ok("Quantidade total cadastrada: " + qtdentradas);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"{ex.Message}");
+            }
+        }
         #endregion
 
         #region POST
@@ -122,7 +143,7 @@ namespace Estoque.Controllers
         #endregion
 
         #region PUT
-        [HttpPut("atualizar", Name = "UpdateEntrada")]
+        [HttpPut(Name = "UpdateEntrada")]
         public async Task<IActionResult> Update(EntradaEstoque entrada)
         {
             try
